@@ -1,27 +1,50 @@
+const catApi = "https://api.thecatapi.com/v1/images/search?limit=10&breed_ids=beng&api_key=live_QUYvukpeaK9btLoQl2wbcvL71jpAEi2xHFPTChaz3E4CJBKOCBugFKVcOslFMOw2";
 
 
 
-
-async function fetchCat() {
+const request = async () => {
     try{
-        const response = await fetch(
-             " https://api.thecatapi.com/v1/images/search?limit=10&breed_ids=beng&api_key=live_QUYvukpeaK9btLoQl2wbcvL71jpAEi2xHFPTChaz3E4CJBKOCBugFKVcOslFMOw2"
-         );
+        const response = await fetch(catApi);
          const data = await response.json();
          console.log(data);
+
+         const imgbox = document.getElementById('catImageCtn');
+
+         let htlmContent = '<ul>';
+         data.forEach(images => {
+            const imgEl = document.createElement('img');
+            imgEl.src = images.url;
+            imgEl.alt = images.description || 'request';
+            htlmContent += `<li>${images.url}`;
+            
+            imgbox.appendChild(imgEl)
+         });
+         htlmContent += '</ul>';
+
+
+
     }catch (error){
         console.log(error);
     }
 
 }
 
- //fetchCat();
+request()
 
+async function showCatImage(){
+    const catImagectn = document.getElementById("catImageCtn");
+    const catImageGenerator = document.getElementById("catImageGenerator");
 
+    catImageGenerator.addEventListener("click", async function(){
+        const newImage = await request();
+        console.log(newImage);
+        newImage.urls.forEach(function(cat){
+            const newCatElement = document.createElement("img");
+            newCatElement.src = cat.url;
+            catImagectn.append(newCatElement);
+        })
+    } )
+}
 
-//  function breedList(breedList){
-//     document.getElementById("breed").innerHTML = `
-//         <select>
-//      <option>Choose a dog breed</option>
-//       ${Object.keyss(imageList).map(function(dogImage){
-//                 return `<option>${dogImage}</option>
+showCatImage();
+
