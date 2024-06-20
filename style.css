@@ -6,6 +6,7 @@
     place-items: center;
     min-width: 320px;
     min-height: 100vh;
+    background-image: url("https://shorturl.at/R0owv");
   }
   
   h1 {
@@ -36,5 +37,10 @@
   }
   button:hover {
     border-color: #646cff;
+  }
+  
+  img{
+    height: 200px;
+    width: 200px;
   }
  
